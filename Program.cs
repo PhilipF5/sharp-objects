@@ -47,6 +47,24 @@ namespace sharp_objects
             }
 
             Console.WriteLine($"We will {operation.ToUpper()} the file {source} and output to {destination ?? "stdout"}");
+
+            Console.WriteLine($"Opening file at {sourceFile.FullName} ...");
+            Stream input = sourceFile.OpenRead();
+
+            Console.WriteLine($"Performing ${operation}ion operation and printing to output ...");
+            if (operation == "encrypt") {
+                // this is where we'll call encrypt
+            }
+            else {
+                // this is where we'll call decrypt
+            }
+
+            input.Close();
+            if (destination != null) {
+                output.Close();
+                FileInfo destFile = new FileInfo(destination);
+                Console.WriteLine($"Output written to ${destFile.FullName}");
+            }
         }
 
         static void PrintUsage() {
