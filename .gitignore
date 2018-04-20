@@ -276,3 +276,5 @@ __pycache__/
 
 .vscode/
 *.gpg
+*.key
+README_decrypted.md
