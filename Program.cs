@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace sharp_objects
+namespace SharpObjects
 {
     class Program
     {
@@ -48,15 +48,26 @@ namespace sharp_objects
 
             Console.WriteLine($"We will {operation.ToUpper()} the file {source} and output to {destination ?? "stdout"}");
 
+            Console.WriteLine("Reading PGP keys ...");
+            FileInfo publicKey = new FileInfo("public.key");
+            FileInfo privateKey = new FileInfo("private.key");
+            PgpKeys keys = new PgpKeys(
+                publicKey.OpenRead(),
+                privateKey.OpenRead(),
+                Environment.GetEnvironmentVariable("PGP_PASSPHRASE"),
+                operation == "encrypt"
+            );
+
             Console.WriteLine($"Opening file at {sourceFile.FullName} ...");
             Stream input = sourceFile.OpenRead();
 
             Console.WriteLine($"Performing ${operation}ion operation and printing to output ...");
+            StreamEncryption encryptionHandler = new StreamEncryption(keys);
             if (operation == "encrypt") {
-                // this is where we'll call encrypt
+                encryptionHandler.Encrypt(sourceFile.Name, input, output);
             }
             else {
-                // this is where we'll call decrypt
+                encryptionHandler.Decrypt(input, output);
             }
 
             input.Close();
