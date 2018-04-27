@@ -6,8 +6,10 @@ namespace SharpObjects
 {
     class Program
     {
+        // Main execution method for the console app
         static void Main(string[] args)
         {
+            // Console app boilerplate stuff to handle the args
             string operation = null;
             string source = null;
             string destination = null;
@@ -37,6 +39,7 @@ namespace SharpObjects
             operation = operation ?? "encrypt";
             FileInfo sourceFile = new FileInfo(source);
 
+            // Get output stream ready, either file or stdout
             Stream output = null;
             if (destination == null) {
                 output = Console.OpenStandardOutput();
@@ -49,6 +52,7 @@ namespace SharpObjects
             Console.WriteLine($"We will {operation.ToUpper()} the file {source} and output to {destination ?? "stdout"}");
 
             Console.WriteLine("Reading PGP keys ...");
+            // Read in our PGP keys and passphrase
             FileInfo publicKey = new FileInfo("public.key");
             FileInfo privateKey = new FileInfo("private.key");
             PgpKeys keys = new PgpKeys(
@@ -59,9 +63,11 @@ namespace SharpObjects
             );
 
             Console.WriteLine($"Opening file at {sourceFile.FullName} ...");
+            // Get input stream ready, read from file referenced by FileInfo
             Stream input = sourceFile.OpenRead();
 
             Console.WriteLine($"Performing ${operation}ion operation and printing to output ...");
+            // Construct our encryption handler and perform the desired operation
             StreamEncryption encryptionHandler = new StreamEncryption(keys);
             if (operation == "encrypt") {
                 encryptionHandler.Encrypt(sourceFile.Name, input, output);
@@ -70,6 +76,7 @@ namespace SharpObjects
                 encryptionHandler.Decrypt(input, output);
             }
 
+            // Clean up streams neatly and finish execution
             input.Close();
             if (destination != null) {
                 output.Close();
@@ -78,6 +85,7 @@ namespace SharpObjects
             }
         }
 
+        // Instructions to be printed if the command doesn't get the inputs expected
         static void PrintUsage() {
             Console.WriteLine("Usage: dotnet run [operation] <source> [destination]");
             Console.WriteLine();

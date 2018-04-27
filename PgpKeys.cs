@@ -10,12 +10,13 @@ namespace SharpObjects
 {
 	public class PgpKeys
 	{
-		private bool _toEncrypt;
+		private bool _toEncrypt; // true == for encryption, false == for decryption
 
 		public PgpPublicKey PublicKey { get; set; }
 		public PgpPrivateKey PrivateKey { get; set; }
 		public PgpSecretKey SecretKey { get; set; }
 
+		// Constructor; if you only want to decrypt, you'd only need publicKeyStream
 		public PgpKeys(Stream publicKeyStream, Stream privateKeyStream = null, string passPhrase = null, bool toEncrypt = true)
 		{
 			_toEncrypt = toEncrypt;
@@ -27,6 +28,7 @@ namespace SharpObjects
 			}
 		}
 
+		// Get the first public key from a key ring bundle
 		private PgpPublicKey GetFirstPublicKey(PgpPublicKeyRingBundle publicKeyRingBundle)
 		{
 			foreach (PgpPublicKeyRing kRing in publicKeyRingBundle.GetKeyRings())
@@ -42,6 +44,12 @@ namespace SharpObjects
 			return null;
 		}
 
+		// Pre-built methods for getting the first or last secret key from a key ring bundle.
+		// Depending on your exact configuration, you may need to play with LINQ a bit
+		// to get the correct secret key.
+		// If you get a PgpException: exception decrypting secret key
+		// with an inner InvalidCipherTextException: unknown block type
+		// that's probably what's causing it. For me, it was trial and error.
 		private PgpSecretKey GetFirstSecretKey(PgpSecretKeyRingBundle secretKeyRingBundle)
 		{
 			foreach (PgpSecretKeyRing kRing in secretKeyRingBundle.GetKeyRings())
@@ -65,6 +73,7 @@ namespace SharpObjects
 					.LastOrDefault(key => key != null);
 		}
 
+		// Read the public key into memory for encrypting data
 		private PgpPublicKey ReadPublicKey(Stream publicKeyStream)
 		{
 			using (Stream inputStream = PgpUtilities.GetDecoderStream(publicKeyStream))
@@ -79,6 +88,7 @@ namespace SharpObjects
 			throw new ArgumentException("No encryption key found in public key ring.");
 		}
 
+		// Private key is derived from secret key using passphrase
 		private PgpPrivateKey ReadPrivateKey(string passPhrase)
 		{
 			PgpPrivateKey privateKey = SecretKey.ExtractPrivateKey(passPhrase.ToCharArray());
@@ -89,6 +99,7 @@ namespace SharpObjects
 			throw new ArgumentException("No private key found in secret key.");
 		}
 
+		// Secret key (private key outside Bouncy Castle) is used for decrypting and signing
 		private PgpSecretKey ReadSecretKey(Stream privateKeyStream)
 		{
 			using (Stream inputStream = PgpUtilities.GetDecoderStream(privateKeyStream))
