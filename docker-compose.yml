@@ -1,0 +1,12 @@
+version: '3'
+services:
+  sharp-objects:
+    image: 'philipf5/sharp-objects:latest'
+    volumes:
+      - './PgpKeys.cs:/opt/sharp-objects/PgpKeys.cs'
+      - './Program.cs:/opt/sharp-objects/Program.cs'
+      - './sharp-objects.csproj:/opt/sharp-objects/sharp-objects.csproj'
+      - './StreamEncryption.cs:/opt/sharp-objects/StreamEncryption.cs'
+      - './README.md:/opt/sharp-objects/README.md'
+    environment:
+      - PGP_PASSPHRASE=passw0rd
