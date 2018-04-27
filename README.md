@@ -2,12 +2,23 @@
 A simple implementation of OpenPGP encryption in .NET Core using the Bouncy Castle project's OpenPGP API.
 
 ## Video Tutorial
-**[Watch it live](https://www.unboxedtechnology.com/dev-talks/may-2018/) at noon (ET) on May 8, 2018. Video will also be available to watch on demand afterward.**
+**[Watch it live](https://www.unboxedtechnology.com/dev-talks/may-2018/) at noon (ET) on May 8, 2018.** Video will also be available to watch on demand afterward.
 
-## Prerequisites
-Here are the tools you'll want to start things off. I'm not including developer basics like a good terminal, text editor, sample files, et cetera.
+## How to Use This Repo
+The `master` branch has the complete, fully functional code for this project. Checkout the `start` branch to get a mostly empty code template like the one we start with in the tutorial. Most of the shell commands in this README assume that you have cloned this repo and navigated into its root folder.
 
-*In this project, GNU Privacy Guard is used only for testing. If you have another OpenPGP toolkit you would rather test with, feel free to do so with the awareness that testing/verification will likely work differently than I've described.*
+## Environment Setup — Pre-Built
+If you don't want to spend time installing tools on your system, creating keys, or any of that and you really just want to spin up a quick, throwaway dev environment for the demo, the fastest option is the Docker image. The image comes pre-built with all prerequisites and a sample PGP keypair for testing. If you have Docker, getting yourself in business is simple:
+```sh
+docker-compose run --rm sharp-objects
+```
+
+That will pull the Docker image for you, mount your local files into a container so your local changes will be reflected, and launch a bash session.
+
+**IMPORTANT:** The Docker image contains a sample PGP keypair created specifically for this demo. Because both the public and private keys come with the Docker image, this keypair is NOT SAFE TO USE FOR ANY ACTUAL SECURITY NEED. In the real world, NEVER make a private key publicly available.
+
+## Environment Setup — DIY
+If you want to build a persistent dev environment yourself, here are the tools you'll want to start things off. I'm not including developer basics like a good terminal, text editor, sample files, et cetera.
 
 ### macOS
 For macOS, you'll need to install the .NET Core SDK and GNU Privacy Guard. Both are available via Homebrew.
@@ -24,10 +35,27 @@ The .NET Core SDK is available from [Microsoft](https://www.microsoft.com/net/do
 
 The official version of GNU Privacy Guard for Windows is [Gpg4win](https://www.gpg4win.org). I haven't had occasion to use it, but it looks GUI-based so it shouldn't be too crazy to figure out.
 
-## New Project Setup
+### Creating and Exporting PGP Keys
+You'll need GNU Privacy Guard to create a PGP keypair. Run the following command to begin:
+```sh
+gpg --full-generate-key
+```
+
+The program will walk you through the key creation. In general, you should pick `4096` as your keysize. The key expiry/validity option is a choice I'm not covering in detail, but suffice it to say that `0` (no expiry) is perfectly fine for a keypair you're only using for academic purposes. At the end of the flow, you'll be shown an output with a description of the key, including a hexadecimal fingerprint you'll need for the next step.
+
+#### Exporting
+To read your keys with `FileStream` for Bouncy Castle, we'll need to export them. Grab that hexadecimal fingerprint from the last output, and use it in the following two commands. The second one will require your passphrase.
+```sh
+$ gpg --armor --output public.key --export <fingerprint>
+$ gpg --armor --output private.key --export-secret-keys <fingerprint>
+```
+
+The `--armor` flag lets us export our keys in plaintext base64, rather than the default binary output. This is the format we typically use when working with PGP keys. You should now have the public and private key files in your project directory.
+
+## Appendix
+### New Project Setup
 These are the commands I ran to initialize this project. Obviously I'm not including universal basics like `mkdir` or `git init`.
 ```sh
 $ dotnet new console
 $ dotnet add package BouncyCastle.OpenPGP --version 1.8.1.1
 ```
-
