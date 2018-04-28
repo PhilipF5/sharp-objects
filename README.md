@@ -8,12 +8,12 @@ A simple implementation of OpenPGP encryption in .NET Core using the Bouncy Cast
 The `master` branch has the complete, fully functional code for this project. Checkout the `start` branch to get a mostly empty code template like the one we start with in the tutorial. Most of the shell commands in this README assume that you have cloned this repo and navigated into its root folder.
 
 ## Environment Setup — Pre-Built
-If you don't want to spend time installing tools on your system, creating keys, or any of that and you really just want to spin up a quick, throwaway dev environment for the demo, the fastest option is the Docker image. The image comes pre-built with all prerequisites and a sample PGP keypair for testing. If you have Docker, getting yourself in business is simple:
+If you don't want to spend time installing tools on your system, creating keys, or any of that, but you have Docker installed on your machine, you can spin up a quick, throwaway dev environment for the demo. The sharp-objects Docker image comes pre-built with all prerequisites and a sample PGP keypair for testing. This approach is fully cross-platform, with the caveats that Linux users need to [install Docker Compose separately](https://docs.docker.com/compose/install/), and Windows users need to be in Linux containers mode with their project drive shared in Docker settings. If you meet those conditions, getting yourself in business is simple:
 ```sh
 docker-compose run --rm sharp-objects
 ```
 
-That will pull the Docker image for you, mount your local files into a container so your local changes will be reflected, and launch a bash session.
+That will pull the Docker image for you, mount your local files into a container so your local repo will be reflected, and launch a bash session.
 
 **IMPORTANT:** The Docker image contains a sample PGP keypair created specifically for this demo. Because both the public and private keys come with the Docker image, this keypair is NOT SAFE TO USE FOR ANY ACTUAL SECURITY NEED. In the real world, NEVER make a private key publicly available.
 
