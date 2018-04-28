@@ -59,3 +59,17 @@ These are the commands I ran to initialize this project. Obviously I'm not inclu
 $ dotnet new console
 $ dotnet add package BouncyCastle.OpenPGP --version 1.8.1.1
 ```
+
+### Featured Tools
+See a developer tool in the video that you want to try? Here's a list of tools and extensions I'm using in the presentation. Credit their authors for creating awesome stuff.
+- [Fish shell](https://fishshell.com)
+  - [Oh My Fish](https://github.com/oh-my-fish/oh-my-fish)
+  - [bobthefish](https://github.com/oh-my-fish/theme-bobthefish)
+  - [Meslo Regular Nerd Font Complete Mono](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Meslo)
+- [Visual Studio Code](https://code.visualstudio.com)
+  - [Bracket Pair Colorizer](https://marketplace.visualstudio.com/items?itemName=CoenraadS.bracket-pair-colorizer)
+  - [Code Fragments](https://marketplace.visualstudio.com/items?itemName=markvincze.code-fragments)
+  - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
+  - [indent-rainbow](https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow)
+  - [Monokai One Dark Vivid](https://marketplace.visualstudio.com/items?itemName=ashpowell.monokai-one-dark-vivid)
+  - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
