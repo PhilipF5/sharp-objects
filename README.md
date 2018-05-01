@@ -73,3 +73,9 @@ See a developer tool in the video that you want to try? Here's a list of tools a
   - [indent-rainbow](https://marketplace.visualstudio.com/items?itemName=oderwat.indent-rainbow)
   - [Monokai One Dark Vivid](https://marketplace.visualstudio.com/items?itemName=ashpowell.monokai-one-dark-vivid)
   - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.vscode-icons)
+
+### Additional Resources
+- [OpenPGP](https://www.openpgp.org) official website
+- [Legion of the Bouncy Castle](https://bouncycastle.org) official website
+- [The Science of Encryption](https://math.berkeley.edu/~kpmann/encryption.pdf) PDF hosted by the UC Berkeley math department
+- [The Mathematics of the RSA Public-Key Cryptosystem](http://www.mathaware.org/mam/06/Kaliski.pdf) by Dr. Burt Kaliski
