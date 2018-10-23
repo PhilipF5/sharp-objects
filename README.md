@@ -2,7 +2,7 @@
 A simple implementation of OpenPGP encryption in .NET Core using the Bouncy Castle project's OpenPGP API.
 
 ## Video Tutorial
-**[Watch it live](https://www.unboxedtechnology.com/dev-talks/may-2018/) at noon (ET) on May 8, 2018.** Video will also be available to watch on demand afterward.
+Available on [YouTube](https://youtu.be/HhbrdOlD-Pg), courtesy of Unboxed DevTalks.
 
 ## How to Use This Repo
 The `master` branch has the complete, fully functional code for this project. Checkout the `start` branch to get a mostly empty code template like the one we start with in the tutorial. Most of the shell commands in this README assume that you have cloned this repo and navigated into its root folder.
